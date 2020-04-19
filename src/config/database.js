@@ -18,7 +18,7 @@ module.exports = {
     username: process.env.DB_TEST_USER,
     password: process.env.DB_TEST_PASS,
     database: process.env.DB_TEST_NAME,
-    logging: true,
+    logging: false,
     define: {
       timestamp: true,
       underscored: true,
