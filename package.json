@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "license": "MIT",
   "devDependencies": {
+    "@babel/preset-env": "^7.9.5",
+    "babel-jest": "^25.3.0",
+    "cross-env": "^7.0.2",
+    "jest": "^25.3.0",
     "nodemon": "^2.0.2",
     "sequelize-cli": "^5.5.1",
-    "sucrase": "^3.10.1"
+    "sucrase": "^3.10.1",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -16,6 +21,17 @@
     "yup": "^0.28.1"
   },
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "pretest": "cross-env NODE_ENV=test npm run migrate:reset"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "verbose": true
   }
 }

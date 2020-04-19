@@ -5,6 +5,8 @@ import databaseConfig from '../config/database';
 import Users from '../app/models/User';
 
 const models = [Users];
+const env = process.env.NODE_ENV || 'development';
+const config = databaseConfig[env];
 
 class Database {
   constructor() {
@@ -12,7 +14,7 @@ class Database {
   }
 
   init() {
-    this.connection = new Sequelize(databaseConfig);
+    this.connection = new Sequelize(config);
 
     models.map(model => model.init(this.connection));
     models.map(
