@@ -6,7 +6,9 @@
     "@babel/preset-env": "^7.9.5",
     "babel-jest": "^25.3.0",
     "cross-env": "^7.0.2",
+    "husky": "^4.2.5",
     "jest": "^25.3.0",
+    "lint-staged": "^10.1.7",
     "nodemon": "^2.0.2",
     "sequelize-cli": "^5.5.1",
     "standard": "^14.3.3",
@@ -26,6 +28,17 @@
     "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
     "pretest": "cross-env NODE_ENV=test npm run migrate:reset"
+  },
+  "lint-staged": {
+    "*.js": [
+      "standard --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "jest": {
     "testEnvironment": "node",
