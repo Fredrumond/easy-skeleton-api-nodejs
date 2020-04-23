@@ -15,8 +15,7 @@ class UserController {
 }
 
 export const ValidPassword = (password) => {
-  console.log('TRETA => ' + password.string)
-  if (password.lenght >= 6) {
+  if (password.length >= 6) {
     return true
   }
   return false
@@ -69,16 +68,16 @@ describe('User Controller', () => {
     expect(response).toEqual(400)
   })
 
-//   it('Should return 200 if provided with all correct parameters', () => {
-//     const sut = new UserController()
-//     const httpRequest = {
-//       body: {
-//         name: 'any_name',
-//         email: 'any_email',
-//         password: '123456'
-//       }
-//     }
-//     const response = sut.store(httpRequest)
-//     expect(response).toEqual(200)
-//   })
+  it('Should return 200 if provided with all correct parameters', () => {
+    const sut = new UserController()
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email',
+        password: '123456'
+      }
+    }
+    const response = sut.store(httpRequest)
+    expect(response).toEqual(200)
+  })
 })
