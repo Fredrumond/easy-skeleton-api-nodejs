@@ -1,16 +1,18 @@
+
 class UserController {
   store (req, res) {
-    const { name, email, password } = req.body
+    console.log(req)
+    const { name, email, password, confPassword } = req.body
 
-    if (!email || !name || !password) {
-      return 400
-    }
+    if (!email || !name || !password || !confPassword) return 400
+
+    if (password !== confPassword) return 400
 
     const verifyPassword = ValidPassword(req.body.password)
 
     if (!verifyPassword) return 400
 
-    return 200
+    return res.status(201).json({ msg: 'User successfully registered!' })
   }
 }
 
@@ -22,6 +24,18 @@ export const ValidPassword = (password) => {
 }
 
 describe('User Controller', () => {
+  const mockRequest = (sessionData, body) => ({
+    session: { data: sessionData },
+    body
+  })
+
+  const mockResponse = () => {
+    const res = {}
+    res.status = jest.fn().mockReturnValue(res)
+    res.json = jest.fn().mockReturnValue(res)
+    return res
+  }
+
   it('Should return 400 if no email is provided', () => {
     const sut = new UserController()
     const httpRequest = {
@@ -55,7 +69,7 @@ describe('User Controller', () => {
     expect(response).toEqual(400)
   })
 
-  it('Must return 400 if the password provided is less than 6 characters', () => {
+  it('Should return 400 if the password provided is less than 6 characters', () => {
     const sut = new UserController()
     const httpRequest = {
       body: {
@@ -68,16 +82,34 @@ describe('User Controller', () => {
     expect(response).toEqual(400)
   })
 
-  it('Should return 200 if provided with all correct parameters', () => {
+  it('Should return 400 if password is diff confPassword', () => {
     const sut = new UserController()
     const httpRequest = {
       body: {
         name: 'any_name',
         email: 'any_email',
-        password: '123456'
+        password: '123',
+        confPassword: '1234'
       }
     }
     const response = sut.store(httpRequest)
-    expect(response).toEqual(200)
+    expect(response).toEqual(400)
+  })
+
+  it('Should return 201 if provided with all correct parameters', () => {
+    const sut = new UserController()
+
+    const req = mockRequest({}, {
+      name: 'any_name',
+      email: 'any_email',
+      password: '123456',
+      confPassword: '123456'
+    })
+    const res = mockResponse()
+
+    sut.store(req, res)
+
+    expect(res.status).toHaveBeenCalledWith(201)
+    expect(res.json).toHaveBeenCalledWith({ msg: 'User successfully registered!' })
   })
 })
