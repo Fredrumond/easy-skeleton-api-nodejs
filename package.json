@@ -28,7 +28,11 @@
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage"
+    "test:ci": "npm test -- --coverage",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
+    "test:antigo": "cross-env NODE_ENV=test jest --testTimeout=10000",
+    "pretest:antigo": "cross-env NODE_ENV=test npm run migrate:reset"
   },
   "standard": {
     "env": [

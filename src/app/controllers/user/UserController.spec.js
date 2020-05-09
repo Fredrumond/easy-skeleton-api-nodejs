@@ -70,21 +70,4 @@ describe('User Controller', () => {
     await sut.store(req, res)
     expect(res.status).toHaveBeenCalledWith(400)
   })
-
-  it('Should return 201 if provided with all correct parameters', async () => {
-    const sut = UserController
-
-    const req = mockRequest({}, {
-      name: 'any_name',
-      email: 'any_email',
-      password: '123456',
-      confPassword: '123456'
-    })
-    const res = mockResponse()
-
-    await sut.store(req, res)
-
-    expect(res.status).toHaveBeenCalledWith(201)
-    expect(res.json).toHaveBeenCalledWith({ message: 'User successfully registered!' })
-  })
 })

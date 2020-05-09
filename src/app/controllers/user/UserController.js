@@ -1,4 +1,5 @@
 import { ValidPassword } from '../../../utils/ValidPassword'
+import User from '../../models/User'
 
 class UserController {
   async store (req, res) {
@@ -11,6 +12,12 @@ class UserController {
     const verifyPassword = ValidPassword(req.body.password)
 
     if (!verifyPassword) return res.status(400).json()
+
+    await User.create({
+      name,
+      email,
+      password
+    })
 
     return res.status(201).json({ message: 'User successfully registered!' })
   }
