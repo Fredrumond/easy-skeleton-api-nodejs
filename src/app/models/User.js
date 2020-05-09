@@ -1,20 +1,10 @@
-import Sequelize, { Model } from 'sequelize'
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define('User',
+    {
+      name: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING
+    })
 
-class User extends Model {
-  static init (sequelize) {
-    super.init(
-      {
-        name: Sequelize.STRING,
-        email: Sequelize.STRING,
-        password: Sequelize.STRING
-      },
-      {
-        sequelize
-      }
-    )
-
-    return this
-  }
+  return User
 }
-
-export default User
