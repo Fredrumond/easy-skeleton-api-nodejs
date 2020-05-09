@@ -26,9 +26,17 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js --ignore tests",
-    "pretest": "NODE_ENV=test sequelize db:migrate",
     "test": "NODE_ENV=test jest",
-    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all"
+    "pretest": "NODE_ENV=test sequelize db:migrate",
+    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
+    "test:integration": "NODE_ENV=test jest -c jest-integration-config.js",
+    "pretest:integration": "NODE_ENV=test sequelize db:migrate",
+    "posttest:integration": "NODE_ENV=test sequelize db:migrate:undo:all",
+    "test:unit": "NODE_ENV=test jest -c jest-unit-config.js",
+    "pretest:unit": "NODE_ENV=test sequelize db:migrate",
+    "posttest:unit": "NODE_ENV=test sequelize db:migrate:undo:all",
+    "test:ci": "npm test -- --coverage",
+    "test:staged": "npm test -- --findRelatedTests"
   },
   "standard": {
     "env": [

@@ -1,12 +1,14 @@
 module.exports = {
-  coverageDirectory: 'coverage',
-  testEnvironment: 'node',
+  bail: true,
+  clearMocks: true,
   collectCoverageFrom: [
-    '**/src/**/*.js',
-    '!**/src/database/migrations/**',
-    '!**/src/database/seeders/**',
-    '!**/src/app.js',
-    '!**/src/routes.js',
-    '!**/src/server.js'
+    'src/**',
+    '!src/database/migrations/**'
+  ],
+  coverageDirectory: 'tests/coverage',
+  testEnvironment: 'node',
+  testMatch: [
+    '**/tests/**/*.test.js?(x)',
+    '**/tests/**/*.spec.js?(x)'
   ]
 }
