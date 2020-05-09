@@ -3,36 +3,32 @@
   "version": "1.0.1",
   "license": "MIT",
   "devDependencies": {
-    "@babel/preset-env": "^7.9.5",
-    "babel-jest": "^25.3.0",
-    "cross-env": "^7.0.2",
     "husky": "^4.2.5",
     "jest": "^25.3.0",
     "lint-staged": "^10.1.7",
     "nodemon": "^2.0.2",
     "sequelize-cli": "^5.5.1",
+    "sqlite3": "^4.2.0",
     "standard": "^14.3.3",
     "sucrase": "^3.10.1",
     "supertest": "^4.0.2"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv-safe": "^8.2.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "factory-girl": "^5.0.4",
+    "faker": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.0.2",
     "sequelize": "^5.21.3"
   },
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "test": "jest --colors --noStackTrace --passWithNoTests",
-    "test:unit": "npm test -- --watch -c jest-unit-config.js",
-    "test:integration": "npm test -- --watch -c jest-integration-config.js",
-    "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage",
-    "migrate": "npx sequelize-cli db:migrate",
-    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
-    "test:antigo": "cross-env NODE_ENV=test jest --testTimeout=10000",
-    "pretest:antigo": "cross-env NODE_ENV=test npm run migrate:reset"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js --ignore tests",
+    "pretest": "NODE_ENV=test sequelize db:migrate",
+    "test": "NODE_ENV=test jest",
+    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "standard": {
     "env": [
