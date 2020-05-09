@@ -1,5 +1,5 @@
-import { ValidPassword } from '../../utils/ValidPassword'
-import User from '../models/User'
+const { ValidPassword } = require('../../utils/ValidPassword')
+const { User } = require('../models')
 
 class UserController {
   async store (req, res) {
@@ -21,6 +21,53 @@ class UserController {
 
     return res.status(201).json({ message: 'User successfully registered!' })
   }
+
+  async index (req, res) {
+    const response = await User.findAll()
+    return res.status(200).send(response)
+  }
+
+  async show (req, res) {
+    const { id } = req.params
+
+    const response = await User.findByPk(id)
+
+    if (response) { return res.status(200).send(response) }
+
+    return res.status(404).send({ msg: 'User not found!' })
+  }
+
+  async update (req, res) {
+    const { id } = req.params
+    const { name, email, password } = req.body
+
+    const user = await User.findByPk(id)
+
+    if (user) {
+      const response = await user.update({
+        name,
+        email,
+        password
+      })
+
+      return res.status(200).json({ type: 'success', msg: 'User edited successfully!', produto: response })
+    }
+
+    return res.status(404).send({ msg: 'User not found!' })
+  }
+
+  async delete (req, res) {
+    const { id } = req.params
+
+    const user = await User.findByPk(id)
+
+    if (user) {
+      await user.destroy()
+      return res.status(200).json({ type: 'success', msg: 'User deleted successfully!' })
+    }
+
+    return res.status(404).send({ msg: 'User not found!' })
+  }
 }
 
-export default new UserController()
+module.exports = new UserController()
