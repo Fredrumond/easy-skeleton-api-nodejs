@@ -1,4 +1,4 @@
-const { ValidPassword } = require('../../utils/ValidPassword')
+const { validPassword } = require('../../utils/ValidPassword')
 const { User } = require('../models')
 
 class UserController {
@@ -9,7 +9,7 @@ class UserController {
 
     if (password !== confPassword) return res.status(400).json()
 
-    const verifyPassword = ValidPassword(req.body.password)
+    const verifyPassword = validPassword(req.body.password)
 
     if (!verifyPassword) return res.status(400).json()
 

@@ -3,7 +3,8 @@ module.exports = {
   clearMocks: true,
   collectCoverageFrom: [
     'src/**',
-    '!src/database/migrations/**'
+    '!src/database/migrations/**',
+    '!src/database/seeders'
   ],
   coverageDirectory: 'tests/coverage',
   testEnvironment: 'node',

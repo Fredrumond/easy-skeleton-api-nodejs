@@ -1,4 +1,4 @@
-const ValidPassword = (password) => {
+const validPassword = (password) => {
   if (password.length >= 6) {
     return true
   }
@@ -6,5 +6,5 @@ const ValidPassword = (password) => {
 }
 
 module.exports = {
-  ValidPassword
+  validPassword
 }
