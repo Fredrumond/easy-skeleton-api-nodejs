@@ -13,13 +13,13 @@ class UserController {
 
     if (!verifyPassword) return res.status(400).json()
 
-    await User.create({
+    const user = await User.create({
       name,
       email,
       password
     })
 
-    return res.status(201).json({ message: 'User successfully registered!' })
+    return res.status(201).json({ message: 'User successfully registered!', user })
   }
 
   async index (req, res) {
