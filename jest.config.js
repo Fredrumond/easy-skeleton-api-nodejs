@@ -4,7 +4,8 @@ module.exports = {
   collectCoverageFrom: [
     'src/**',
     '!src/database/migrations/**',
-    '!src/database/seeders/**'
+    '!src/database/seeders/**',
+    '!src/server.js'
   ],
   coverageDirectory: 'tests/coverage',
   testEnvironment: 'node',

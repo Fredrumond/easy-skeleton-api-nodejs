@@ -5,13 +5,11 @@ class UserController {
   async store (req, res) {
     const { name, email, password, confPassword } = req.body
 
-    if (!email || !name || !password || !confPassword) return res.status(400).json()
+    if (!email || !name || !password || !confPassword) return res.status(400).json({ message: 'Invalid prammeters.' })
 
-    if (password !== confPassword) return res.status(400).json()
+    if (password !== confPassword) return res.status(400).json({ message: 'Passwords do not match' })
 
-    const verifyPassword = validPassword(req.body.password)
-
-    if (!verifyPassword) return res.status(400).json()
+    if (!validPassword(req.body.password)) return res.status(400).json({ message: 'Password must contain 6 characters or more.' })
 
     const user = await User.create({
       name,
@@ -19,7 +17,7 @@ class UserController {
       password
     })
 
-    return res.status(201).json({ message: 'User successfully registered!', user })
+    return res.status(201).json({ message: 'User successfully registered.', user })
   }
 
   async index (req, res) {

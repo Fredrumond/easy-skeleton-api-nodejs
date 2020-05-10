@@ -2,7 +2,7 @@ const request = require('supertest')
 const app = require('../../src/app')
 
 describe('User Create', () => {
-  it('Should return 400 if no email is provided', async () => {
+  it('Should1 return 400 if no email is provided', async () => {
     const res = await request(app)
       .post('/users')
       .send({
@@ -68,8 +68,8 @@ describe('User Create', () => {
         password: '1234567',
         confPassword: '1234567'
       })
-    console.log(res.body.user)
     expect(res.status).toEqual(201)
+    expect(res.body.message).toEqual('User successfully registered.')
   })
 })
 
@@ -83,14 +83,23 @@ describe('User Index', () => {
 
 describe('User Show', () => {
   it('should return user with id 1', async () => {
+    const user = await request(app)
+      .post('/users')
+      .send({
+        name: 'test is cool',
+        email: 'test is cool',
+        password: '1234567',
+        confPassword: '1234567'
+      })
+
     const res = await request(app)
-      .get('/users/1')
+      .get(`/users/${user.body.user.id}`)
     expect(res.status).toEqual(200)
   })
 
   it('should return 404, user with id 2', async () => {
     const res = await request(app)
-      .get('/users/2')
+      .get('/users/100')
     expect(res.status).toEqual(404)
   })
 })
@@ -98,13 +107,21 @@ describe('User Show', () => {
 describe('User Update', () => {
   it('should return 404, user with id 2 update', async () => {
     const res = await request(app)
-      .put('/users/2')
+      .put('/users/100')
     expect(res.status).toEqual(404)
   })
 
   it('should return 200, user with id 1 update', async () => {
+    const user = await request(app)
+      .post('/users')
+      .send({
+        name: 'test is cool',
+        email: 'test is cool',
+        password: '1234567',
+        confPassword: '1234567'
+      })
     const res = await request(app)
-      .put('/users/1')
+      .put(`/users/${user.body.user.id}`)
     expect(res.status).toEqual(200)
   })
 })
@@ -112,13 +129,22 @@ describe('User Update', () => {
 describe('User Delete', () => {
   it('should return 404, remove user with id 2', async () => {
     const res = await request(app)
-      .delete('/users/2')
+      .delete('/users/100')
     expect(res.status).toEqual(404)
   })
 
   it('should return 200, remove user with id 1', async () => {
+    const user = await request(app)
+      .post('/users')
+      .send({
+        name: 'test is cool',
+        email: 'test is cool',
+        password: '1234567',
+        confPassword: '1234567'
+      })
+
     const res = await request(app)
-      .delete('/users/1')
+      .delete(`/users/${user.body.user.id}`)
     expect(res.status).toEqual(200)
   })
 })
