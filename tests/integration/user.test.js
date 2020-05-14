@@ -1,14 +1,24 @@
 const request = require('supertest')
 const app = require('../../src/app')
 
+const faker = require('faker')
+const factory = require('../factories')
+
+const user = {
+  name: faker.name.findName(),
+  email: faker.internet.email(),
+  password: '123456',
+  confPassword: '123456'
+}
+
 describe('User Create', () => {
   it('Should1 return 400 if no email is provided', async () => {
     const res = await request(app)
       .post('/users')
       .send({
-        name: 'test is cool',
-        password: '123456',
-        confPassword: '123456'
+        name: user.name,
+        password: user.password,
+        confPassword: user.confPassword
       })
     expect(res.status).toEqual(400)
   })
@@ -17,7 +27,7 @@ describe('User Create', () => {
     const res = await request(app)
       .post('/users')
       .send({
-        email: 'test is cool',
+        email: user.email,
         password: '123456',
         confPassword: '123456'
       })
@@ -28,8 +38,8 @@ describe('User Create', () => {
     const res = await request(app)
       .post('/users')
       .send({
-        name: 'test is cool',
-        email: 'test is cool',
+        name: user.name,
+        email: user.email,
         confPassword: '123456'
       })
     expect(res.status).toEqual(400)
@@ -39,8 +49,8 @@ describe('User Create', () => {
     const res = await request(app)
       .post('/users')
       .send({
-        name: 'test is cool',
-        email: 'test is cool',
+        name: user.name,
+        email: user.email,
         password: '123',
         confPassword: '123456'
       })
@@ -51,30 +61,25 @@ describe('User Create', () => {
     const res = await request(app)
       .post('/users')
       .send({
-        name: 'test is cool',
-        email: 'test is cool',
+        name: user.name,
+        email: user.email,
         password: '123456',
         confPassword: '12345'
       })
     expect(res.status).toEqual(400)
   })
 
-  it('should create a new user', async () => {
+  it('Should create a new user', async () => {
     const res = await request(app)
       .post('/users')
-      .send({
-        name: 'test is cool',
-        email: 'test is cool',
-        password: '1234567',
-        confPassword: '1234567'
-      })
+      .send(user)
     expect(res.status).toEqual(201)
     expect(res.body.message).toEqual('User successfully registered.')
   })
 })
 
 describe('User Index', () => {
-  it('should return users', async () => {
+  it('Should return users', async () => {
     const res = await request(app)
       .get('/users')
     expect(res.status).toEqual(200)
@@ -82,22 +87,15 @@ describe('User Index', () => {
 })
 
 describe('User Show', () => {
-  it('should return user with id 1', async () => {
-    const user = await request(app)
-      .post('/users')
-      .send({
-        name: 'test is cool',
-        email: 'test is cool',
-        password: '1234567',
-        confPassword: '1234567'
-      })
+  it('Should return user search', async () => {
+    const user = await factory.create('User')
 
     const res = await request(app)
-      .get(`/users/${user.body.user.id}`)
+      .get(`/users/${user.id}`)
     expect(res.status).toEqual(200)
   })
 
-  it('should return 404, user with id 2', async () => {
+  it('Should return 404, if user not registred', async () => {
     const res = await request(app)
       .get('/users/100')
     expect(res.status).toEqual(404)
@@ -105,46 +103,33 @@ describe('User Show', () => {
 })
 
 describe('User Update', () => {
-  it('should return 404, user with id 2 update', async () => {
+  it('Should return 404, if user not registred', async () => {
     const res = await request(app)
       .put('/users/100')
     expect(res.status).toEqual(404)
   })
 
-  it('should return 200, user with id 1 update', async () => {
-    const user = await request(app)
-      .post('/users')
-      .send({
-        name: 'test is cool',
-        email: 'test is cool',
-        password: '1234567',
-        confPassword: '1234567'
-      })
+  it('Should return 200, if the user informed to update exists', async () => {
+    const user = await factory.create('User')
+
     const res = await request(app)
-      .put(`/users/${user.body.user.id}`)
+      .put(`/users/${user.id}`)
     expect(res.status).toEqual(200)
   })
 })
 
 describe('User Delete', () => {
-  it('should return 404, remove user with id 2', async () => {
+  it('Should return 404, if user not registred', async () => {
     const res = await request(app)
       .delete('/users/100')
     expect(res.status).toEqual(404)
   })
 
-  it('should return 200, remove user with id 1', async () => {
-    const user = await request(app)
-      .post('/users')
-      .send({
-        name: 'test is cool',
-        email: 'test is cool',
-        password: '1234567',
-        confPassword: '1234567'
-      })
+  it('Should return 200, if the user informed to delete exists', async () => {
+    const user = await factory.create('User')
 
     const res = await request(app)
-      .delete(`/users/${user.body.user.id}`)
+      .delete(`/users/${user.id}`)
     expect(res.status).toEqual(200)
   })
 })
