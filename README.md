@@ -1,26 +1,10 @@
-
 # Easy Skeleton API node.js
-Este projeto tem a finalidade para de node e para a criação rápida de pequenos projetos.
+Este projeto tem a finalidade para o estudo de node e para a criação rápida de pequenos projetos.
 
-## Dependências
-```json
-"cors"
-"dotenv-safe"
-"express"
-"mysql2"
-"sequelize"
-```
-## Dev dependências
-```json
-"@babel/preset-env"
-"babel-jest"
-"cross-env"
-"jest"
-"nodemon"
-"sequelize-cli"
-"sucrase"
-"supertest"
-```
+Como é um projeto de estudos, ao ler este documento você pode encontrar alguns links para algumas explicações para mostrar o porque da utilização.
+
+ - [Dependências](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/DEPENDENCIAS.md)
+
 ## Estrutura
 
  - src
@@ -209,4 +193,3 @@ describe('Test Endpoints', () => {
 	});
 })
 ```
-
