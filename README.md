@@ -35,139 +35,57 @@ Como é um projeto de estudos, ao ler este documento você pode encontrar alguns
 - jest.config.js
 - package.json
 
-  
-
-## Instruções de uso
-
-  
+ ## Instruções de uso
 
 #### Clonando o repositório
 
-  
-
 Execute o seguinte comando:
-
-  
-
 ```terminal
-
 $ git clone https://github.com/Fredrumond/easy-skeleton-api-nodejs.git
-
 ```
 
 #### Criando arquivo .env
 
-  
-
-Para criar o arquivo `.env` siga os seguintes passos:
-
-  
+Para criar o arquivo `.env`  e o `.env.test` siga os seguintes passos:
 
 - Abra seu terminal e use o seguinte comando `cp .env.example .env` e pronto o `.env` esta criado.
+- - Abra seu terminal e use o seguinte comando `cp .env.test.example .env.test` e pronto o `.env.test` esta criado.
 
-- Abra o arquivo e insira os seguintes parâmetros :
-
-```terminal
-
-NODE_ENV=[development,test,production]
-
-APP_PORT=[porta que vai rodar sua aplicação]
-
-  
-
-## DADOS DO BANCO DE DESENVOLVIMENTO
-
-DB_DEV_SERVER=
-
-DB_DEV_USER=
-
-DB_DEV_PASS=
-
-DB_DEV_NAME=
-
-  
-
-## DADOS DO BANCO DE TESTES
-
-DB_TEST_SERVER=
-
-DB_TEST_USER=
-
-DB_TEST_PASS=
-
-DB_TEST_NAME=
-
-  
-
-## DADOS DO BANCO DE PRODUÇAO
-
-DB_SERVER=
-
-DB_USER=
-
-DB_PASS=
-
-DB_NAME=
-
-```
-
-Obs: Se nao for informado o `NODE_ENV` automaticamente tudo é feito pelo development.
-
-  
+- Abra os arquivo e complete as variáveis de acordo com suas configurações
 
 #### Instalando pacotes
 
-  
-
 ```terminal
-
 $ yarn
-
 ```
 
 #### Rodando migration
 
-  
-
 ```terminal
-
 $ yarn sequelize db:migrate
-
 ```
 
 #### Rodando seeder
 
-  
-
 ```terminal
-
 $ yarn sequelize db:seed:all
-
 ```
 
 #### Rodando a aplicação
 
 ```terminal
-
 $ yarn dev
-
 ```
 
 #### Rodando os testes
 
 ```terminal
-
 $ yarn test
-
 ```
 
   
 
 A aplicação por padrão tem um modelo de usuário definido para exemplificar o uso da estrutura.
-
-  
-
-É preciso criar um banco de testes para assim ser executados.
 
   
 
