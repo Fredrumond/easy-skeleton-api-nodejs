@@ -4,10 +4,9 @@ Este projeto tem a finalidade para o estudo de node e para a criação rápida d
 
 Como é um projeto para praticas de estudos, ao ler este documento você pode encontrar alguns links para algumas explicações para mostrar o porque da utilização e como esta configurado.
 
--  [Dependências](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/DEPENDENCIAS.md)
+- [Dependências](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/DEPENDENCIAS.md)
 - [Husky](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/HUSKY.md)
 - [Lint staged](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/LINTSTAGED.md)
-- [Standard](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/STANDARD.md)
 - [Scripts no package.json](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/SCRIPTS.md)
 
 
