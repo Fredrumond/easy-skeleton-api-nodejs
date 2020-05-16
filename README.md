@@ -185,6 +185,7 @@ describe('Test Endpoints', () => {
 ```
 
 ## Em desenvolvimento
+- Explicação do workflow do projeto
 - Autenticação do usuário utilizando JWT
 - Recuperação de senha
 - Foto de perfil
