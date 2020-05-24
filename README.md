@@ -1,5 +1,7 @@
 # Easy Skeleton API node.js
 
+[![Build Status](https://travis-ci.org/Fredrumond/easy-skeleton-api-nodejs.svg?branch=master)](https://travis-ci.org/Fredrumond/easy-skeleton-api-nodejs)
+
 Este projeto tem a finalidade para o estudo de node e para a criação rápida de pequenos projetos.
 
 Como é um projeto para praticas de estudos, ao ler este documento você pode encontrar alguns links para algumas explicações para mostrar o porque da utilização e como esta configurado.
