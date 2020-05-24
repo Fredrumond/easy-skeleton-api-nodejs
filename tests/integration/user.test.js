@@ -21,6 +21,7 @@ describe('User Create', () => {
         confPassword: user.confPassword
       })
     expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Missing param: email' })
   })
 
   it('Should return 400 if no name is provided', async () => {
@@ -32,6 +33,7 @@ describe('User Create', () => {
         confPassword: '123456'
       })
     expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Missing param: name' })
   })
 
   it('Should return 400 if no password is provided', async () => {
@@ -43,6 +45,19 @@ describe('User Create', () => {
         confPassword: '123456'
       })
     expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Missing param: password' })
+  })
+
+  it('Should return 400 if no confPassword is provided', async () => {
+    const res = await request(app)
+      .post('/users')
+      .send({
+        name: user.name,
+        email: user.email,
+        password: '123456'
+      })
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Missing param: confPassword' })
   })
 
   it('Should return 400 if the password provided is less than 6 characters', async () => {

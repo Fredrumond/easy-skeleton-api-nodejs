@@ -1,11 +1,31 @@
 const { validPassword } = require('../../utils/ValidPassword')
 const { User } = require('../models')
 
+const HttpResponse = require('./helpers/http-response')
+const MissingParamError = require('../../utils/errors/missing-param-error')
 class UserController {
   async store (req, res) {
     const { name, email, password, confPassword } = req.body
 
-    if (!email || !name || !password || !confPassword) return res.status(400).json({ message: 'Invalid prammeters.' })
+    if (!email) {
+      const response = HttpResponse.badRequest(new MissingParamError('email'))
+      return res.status(response.statusCode).json(response.body)
+    }
+
+    if (!name) {
+      const response = HttpResponse.badRequest(new MissingParamError('name'))
+      return res.status(response.statusCode).json(response.body)
+    }
+
+    if (!password) {
+      const response = HttpResponse.badRequest(new MissingParamError('password'))
+      return res.status(response.statusCode).json(response.body)
+    }
+
+    if (!confPassword) {
+      const response = HttpResponse.badRequest(new MissingParamError('confPassword'))
+      return res.status(response.statusCode).json(response.body)
+    }
 
     if (password !== confPassword) return res.status(400).json({ message: 'Passwords do not match' })
 
