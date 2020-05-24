@@ -24,6 +24,19 @@ describe('User Create', () => {
     expect(res.body).toEqual({ error: 'Missing param: email' })
   })
 
+  it('Should1 return 400 if email provided is invalid', async () => {
+    const res = await request(app)
+      .post('/users')
+      .send({
+        name: user.name,
+        email: 'invalid_email',
+        password: user.password,
+        confPassword: user.confPassword
+      })
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Invalid param: email' })
+  })
+
   it('Should return 400 if no name is provided', async () => {
     const res = await request(app)
       .post('/users')
@@ -70,6 +83,7 @@ describe('User Create', () => {
         confPassword: '123456'
       })
     expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Invalid param: Password must contain 6 characters or more' })
   })
 
   it('Should return 400 if password is diff confPassword', async () => {

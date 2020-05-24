@@ -2,13 +2,22 @@ const { validPassword } = require('../../utils/ValidPassword')
 const { User } = require('../models')
 
 const HttpResponse = require('./helpers/http-response')
-const MissingParamError = require('../../utils/errors/missing-param-error')
+const { MissingParamError, InvalidParamError } = require('../../utils/errors')
+
+const EmailValidator = require('../../utils/helpers/email-validator')
 class UserController {
   async store (req, res) {
+    const validEmail = new EmailValidator()
+
     const { name, email, password, confPassword } = req.body
 
     if (!email) {
       const response = HttpResponse.badRequest(new MissingParamError('email'))
+      return res.status(response.statusCode).json(response.body)
+    }
+
+    if (!validEmail.isValid(email)) {
+      const response = HttpResponse.badRequest(new InvalidParamError('email'))
       return res.status(response.statusCode).json(response.body)
     }
 
@@ -22,14 +31,19 @@ class UserController {
       return res.status(response.statusCode).json(response.body)
     }
 
+    if (!validPassword(password)) {
+      const response = HttpResponse.badRequest(new InvalidParamError('Password must contain 6 characters or more'))
+      return res.status(response.statusCode).json(response.body)
+    }
+
     if (!confPassword) {
       const response = HttpResponse.badRequest(new MissingParamError('confPassword'))
       return res.status(response.statusCode).json(response.body)
     }
 
-    if (password !== confPassword) return res.status(400).json({ message: 'Passwords do not match' })
-
-    if (!validPassword(req.body.password)) return res.status(400).json({ message: 'Password must contain 6 characters or more.' })
+    if (password !== confPassword) {
+      return res.status(400).json({ message: 'Passwords do not match' })
+    }
 
     const user = await User.create({
       name,
