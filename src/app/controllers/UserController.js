@@ -1,5 +1,5 @@
 const { validPassword } = require('../../utils/ValidPassword')
-const { User } = require('../models')
+const UserRepository = require('../../repositories/user')
 
 const HttpResponse = require('./helpers/http-response')
 const { MissingParamError, InvalidParamError } = require('../../utils/errors')
@@ -45,43 +45,35 @@ class UserController {
       return res.status(400).json({ message: 'Passwords do not match' })
     }
 
-    const user = await User.create({
-      name,
-      email,
-      password
-    })
+    const user = await UserRepository.save(req.body)
 
     return res.status(201).json({ message: 'User successfully registered.', user })
   }
 
   async index (req, res) {
-    const response = await User.findAll()
+    const response = await UserRepository.getAll()
     return res.status(200).send(response)
   }
 
   async show (req, res) {
     const { id } = req.params
 
-    const response = await User.findByPk(id)
+    const response = await UserRepository.findByPk(id)
 
-    if (response) { return res.status(200).send(response) }
+    if (response) {
+      return res.status(200).send(response)
+    }
 
     return res.status(404).send({ msg: 'User not found!' })
   }
 
   async update (req, res) {
     const { id } = req.params
-    const { name, email, password } = req.body
 
-    const user = await User.findByPk(id)
+    const user = await UserRepository.findByPk(id)
 
     if (user) {
-      const response = await user.update({
-        name,
-        email,
-        password
-      })
-
+      const response = await UserRepository.update(user, req.body)
       return res.status(200).json({ type: 'success', msg: 'User edited successfully!', produto: response })
     }
 
@@ -91,10 +83,10 @@ class UserController {
   async delete (req, res) {
     const { id } = req.params
 
-    const user = await User.findByPk(id)
+    const user = await UserRepository.findByPk(id)
 
     if (user) {
-      await user.destroy()
+      await UserRepository.destroy(user)
       return res.status(200).json({ type: 'success', msg: 'User deleted successfully!' })
     }
 
