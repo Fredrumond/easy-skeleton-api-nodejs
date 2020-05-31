@@ -1,17 +1,19 @@
 module.exports = class HttpResponse {
-  static ok (body) {
+  static ok (body, message) {
     return {
       statusCode: 200,
       body: {
+        message: message,
         body
       }
     }
   }
 
-  static created (body) {
+  static created (body, message) {
     return {
       statusCode: 201,
       body: {
+        message: message,
         body
       }
     }
@@ -26,11 +28,11 @@ module.exports = class HttpResponse {
     }
   }
 
-  static notFound (error) {
+  static notFound (message) {
     return {
       statusCode: 404,
       body: {
-        error: error.message
+        message: message
       }
     }
   }

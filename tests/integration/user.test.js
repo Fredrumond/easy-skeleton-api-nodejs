@@ -96,6 +96,7 @@ describe('User Create', () => {
         confPassword: '12345'
       })
     expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Missing param: Passwords do not match' })
   })
 
   it('Should create a new user', async () => {
@@ -122,12 +123,14 @@ describe('User Show', () => {
     const res = await request(app)
       .get(`/users/${user.id}`)
     expect(res.status).toEqual(200)
+    expect(res.body.body.id).toEqual(user.id)
   })
 
   it('Should return 404, if user not registred', async () => {
     const res = await request(app)
       .get('/users/100')
     expect(res.status).toEqual(404)
+    expect(res.body.message).toEqual('User not found!')
   })
 })
 
@@ -136,6 +139,52 @@ describe('User Update', () => {
     const res = await request(app)
       .put('/users/100')
     expect(res.status).toEqual(404)
+    expect(res.body.message).toEqual('User not found!')
+  })
+
+  it('Should return 400 if the password provided is less than 6 characters', async () => {
+    const user = await factory.create('User')
+
+    const res = await request(app)
+      .put(`/users/${user.id}`).send({
+        password: '12345'
+      })
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Invalid param: Password must contain 6 characters or more' })
+  })
+
+  it('Should return 400 if no confPassword is provided', async () => {
+    const user = await factory.create('User')
+
+    const res = await request(app)
+      .put(`/users/${user.id}`).send({
+        password: '123456'
+      })
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Missing param: confPassword' })
+  })
+
+  it('Should return 400 if password is diff confPassword', async () => {
+    const user = await factory.create('User')
+
+    const res = await request(app)
+      .put(`/users/${user.id}`).send({
+        password: '123456',
+        confPassword: '123456789'
+      })
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Missing param: Passwords do not match' })
+  })
+
+  it('Should return 400 if email provided is invalid', async () => {
+    const user = await factory.create('User')
+
+    const res = await request(app)
+      .put(`/users/${user.id}`).send({
+        email: 'invalid_email'
+      })
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Invalid param: email' })
   })
 
   it('Should return 200, if the user informed to update exists', async () => {
@@ -144,6 +193,7 @@ describe('User Update', () => {
     const res = await request(app)
       .put(`/users/${user.id}`)
     expect(res.status).toEqual(200)
+    expect(res.body.message).toEqual('User edited successfully!')
   })
 })
 
@@ -152,6 +202,7 @@ describe('User Delete', () => {
     const res = await request(app)
       .delete('/users/100')
     expect(res.status).toEqual(404)
+    expect(res.body.message).toEqual('User not found!')
   })
 
   it('Should return 200, if the user informed to delete exists', async () => {
@@ -160,5 +211,6 @@ describe('User Delete', () => {
     const res = await request(app)
       .delete(`/users/${user.id}`)
     expect(res.status).toEqual(200)
+    expect(res.body.message).toEqual('User deleted successfully!')
   })
 })

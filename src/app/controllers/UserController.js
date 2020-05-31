@@ -5,10 +5,9 @@ const HttpResponse = require('./helpers/http-response')
 const { MissingParamError, InvalidParamError } = require('../../utils/errors')
 
 const EmailValidator = require('../../utils/helpers/email-validator')
+const validEmail = new EmailValidator()
 class UserController {
   async store (req, res) {
-    const validEmail = new EmailValidator()
-
     const { name, email, password, confPassword } = req.body
 
     if (!email) {
@@ -42,42 +41,73 @@ class UserController {
     }
 
     if (password !== confPassword) {
-      return res.status(400).json({ message: 'Passwords do not match' })
+      const response = HttpResponse.badRequest(new MissingParamError('Passwords do not match'))
+      return res.status(response.statusCode).json(response.body)
     }
 
     const user = await UserRepository.save(req.body)
 
-    return res.status(201).json({ message: 'User successfully registered.', user })
+    const response = HttpResponse.created(user, 'User successfully registered.')
+    return res.status(response.statusCode).json(response.body)
   }
 
   async index (req, res) {
-    const response = await UserRepository.getAll()
-    return res.status(200).send(response)
+    const users = await UserRepository.getAll()
+    const response = HttpResponse.ok(users)
+    return res.status(response.statusCode).json(response.body)
   }
 
   async show (req, res) {
     const { id } = req.params
 
-    const response = await UserRepository.findByPk(id)
+    const user = await UserRepository.findByPk(id)
 
-    if (response) {
-      return res.status(200).send(response)
+    if (user) {
+      const response = HttpResponse.ok(user)
+      return res.status(response.statusCode).json(response.body)
     }
 
-    return res.status(404).send({ msg: 'User not found!' })
+    const response = HttpResponse.notFound('User not found!')
+    return res.status(response.statusCode).json(response.body)
   }
 
   async update (req, res) {
     const { id } = req.params
+    const { email, password, confPassword } = req.body
 
     const user = await UserRepository.findByPk(id)
 
     if (user) {
-      const response = await UserRepository.update(user, req.body)
-      return res.status(200).json({ type: 'success', msg: 'User edited successfully!', produto: response })
+      if (password) {
+        if (!validPassword(password)) {
+          const response = HttpResponse.badRequest(new InvalidParamError('Password must contain 6 characters or more'))
+          return res.status(response.statusCode).json(response.body)
+        }
+        if (!confPassword) {
+          const response = HttpResponse.badRequest(new MissingParamError('confPassword'))
+          return res.status(response.statusCode).json(response.body)
+        }
+
+        if (password !== confPassword) {
+          const response = HttpResponse.badRequest(new MissingParamError('Passwords do not match'))
+          return res.status(response.statusCode).json(response.body)
+        }
+      }
+
+      if (email) {
+        if (!validEmail.isValid(email)) {
+          const response = HttpResponse.badRequest(new InvalidParamError('email'))
+          return res.status(response.statusCode).json(response.body)
+        }
+      }
+
+      const userUpdate = await UserRepository.update(user, req.body)
+      const response = HttpResponse.ok(userUpdate, 'User edited successfully!')
+      return res.status(response.statusCode).json(response.body)
     }
 
-    return res.status(404).send({ msg: 'User not found!' })
+    const response = HttpResponse.notFound('User not found!')
+    return res.status(response.statusCode).json(response.body)
   }
 
   async delete (req, res) {
@@ -87,10 +117,12 @@ class UserController {
 
     if (user) {
       await UserRepository.destroy(user)
-      return res.status(200).json({ type: 'success', msg: 'User deleted successfully!' })
+      const response = HttpResponse.ok(user, 'User deleted successfully!')
+      return res.status(response.statusCode).json(response.body)
     }
 
-    return res.status(404).send({ msg: 'User not found!' })
+    const response = HttpResponse.notFound('User not found!')
+    return res.status(response.statusCode).json(response.body)
   }
 }
 
