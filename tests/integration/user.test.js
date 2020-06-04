@@ -108,13 +108,13 @@ describe('User Create', () => {
   })
 })
 
-// describe('User Index', () => {
-//   it('Should return users', async () => {
-//     const res = await request(app)
-//       .get('/api/users')
-//     expect(res.status).toEqual(200)
-//   })
-// })
+describe('User Index', () => {
+  it('Should return users', async () => {
+    const res = await request(app)
+      .get('/api/users')
+    expect(res.status).toEqual(200)
+  })
+})
 
 // describe('User Show', () => {
 //   it('Should return user search', async () => {

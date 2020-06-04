@@ -1,8 +1,10 @@
 const UserCreateRouterComposer = require('../composers/user-create-router-composer')
+const UserIndexRouterComposer = require('../composers/user-index-router-composer')
 const { adapt } = require('../adapters/express-router-adapter')
 
 module.exports = router => {
   router.post('/users', adapt(UserCreateRouterComposer.compose()))
+  router.get('/users', adapt(UserIndexRouterComposer.compose()))
 }
 
 // routes.post('/users', UserController.store)
