@@ -7,7 +7,7 @@ module.exports = {
     '!src/database/seeders/**',
     '!src/main/server.js'
   ],
-  coverageDirectory: 'tests/coverage',
+  coverageDirectory: './coverage/',
   testEnvironment: 'node',
   testMatch: [
     '**/tests/**/*.test.js?(x)',
