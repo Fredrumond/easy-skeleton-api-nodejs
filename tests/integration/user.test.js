@@ -2,7 +2,7 @@ const request = require('supertest')
 const app = require('../../src/main/app')
 
 const faker = require('faker')
-// const factory = require('../factories')
+const factory = require('../factories')
 
 const user = {
   name: faker.name.findName(),
@@ -116,23 +116,23 @@ describe('User Index', () => {
   })
 })
 
-// describe('User Show', () => {
-//   it('Should return user search', async () => {
-//     const user = await factory.create('User')
+describe('User Show', () => {
+  it('Should return user search', async () => {
+    const user = await factory.create('User')
 
-//     const res = await request(app)
-//       .get(`/api/users/${user.id}`)
-//     expect(res.status).toEqual(200)
-//     expect(res.body.body.id).toEqual(user.id)
-//   })
+    const res = await request(app)
+      .get(`/api/users/${user.id}`)
+    expect(res.status).toEqual(200)
+    expect(res.body.body.id).toEqual(user.id)
+  })
 
-//   it('Should return 404, if user not registred', async () => {
-//     const res = await request(app)
-//       .get('/api/users/100')
-//     expect(res.status).toEqual(404)
-//     expect(res.body.message).toEqual('User not found!')
-//   })
-// })
+  it('Should return 404, if user not registred', async () => {
+    const res = await request(app)
+      .get('/api/users/100')
+    expect(res.status).toEqual(404)
+    expect(res.body.message).toEqual('User not found!')
+  })
+})
 
 // describe('User Update', () => {
 //   it('Should return 404, if user not registred', async () => {
