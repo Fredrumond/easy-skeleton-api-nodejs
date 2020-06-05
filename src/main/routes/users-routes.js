@@ -12,5 +12,3 @@ module.exports = router => {
   router.put('/users/:id', adapt(UserUpdateRouterComposer.compose()))
   router.delete('/users/:id', adapt(UserDeleteRouterComposer.compose()))
 }
-
-// routes.delete('/users/:id', UserController.delete)

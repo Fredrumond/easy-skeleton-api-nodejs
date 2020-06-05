@@ -5,7 +5,7 @@ module.exports = {
     'src/**',
     '!src/database/migrations/**',
     '!src/database/seeders/**',
-    '!src/server.js'
+    '!src/main/server.js'
   ],
   coverageDirectory: 'tests/coverage',
   testEnvironment: 'node',
