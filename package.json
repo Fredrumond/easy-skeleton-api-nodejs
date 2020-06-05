@@ -32,8 +32,7 @@
     "test:unit": "jest --watch -c jest-unit-config.js",
     "test:integration": "npm test -c jest-integration-config.js",
     "test:ci": "npm test -- --coverage",
-    "test:staged": "npm test -- --findRelatedTests",
-    "coverage": "NODE_ENV=test nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "test:staged": "npm test -- --findRelatedTests"
   },
   "standard": {
     "env": [
