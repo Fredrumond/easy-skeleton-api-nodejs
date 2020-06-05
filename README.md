@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Fredrumond/easy-skeleton-api-nodejs.svg?branch=master)](https://travis-ci.org/Fredrumond/easy-skeleton-api-nodejs)
+[![codecov](https://codecov.io/gh/Fredrumond/easy-skeleton-api-nodejs/branch/master/graph/badge.svg)](https://codecov.io/gh/Fredrumond/easy-skeleton-api-nodejs)
 # Easy Skeleton API node.js
 
 Este projeto tem a finalidade para o estudo de node e para a criação rápida de pequenos projetos.
