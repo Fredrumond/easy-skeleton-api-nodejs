@@ -198,20 +198,20 @@ describe('User Update', () => {
   })
 })
 
-// describe('User Delete', () => {
-//   it('Should return 404, if user not registred', async () => {
-//     const res = await request(app)
-//       .delete('/api/users/100')
-//     expect(res.status).toEqual(404)
-//     expect(res.body.message).toEqual('User not found!')
-//   })
+describe('User Delete', () => {
+  it('Should return 404, if user not registred', async () => {
+    const res = await request(app)
+      .delete('/api/users/100')
+    expect(res.status).toEqual(404)
+    expect(res.body.message).toEqual('User not found!')
+  })
 
-//   it('Should return 200, if the user informed to delete exists', async () => {
-//     const user = await factory.create('User')
+  it('Should return 200, if the user informed to delete exists', async () => {
+    const user = await factory.create('User')
 
-//     const res = await request(app)
-//       .delete(`/api/users/${user.id}`)
-//     expect(res.status).toEqual(200)
-//     expect(res.body.message).toEqual('User deleted successfully!')
-//   })
-// })
+    const res = await request(app)
+      .delete(`/api/users/${user.id}`)
+    expect(res.status).toEqual(200)
+    expect(res.body.message).toEqual('User deleted successfully!')
+  })
+})
