@@ -134,68 +134,69 @@ describe('User Show', () => {
   })
 })
 
-// describe('User Update', () => {
-//   it('Should return 404, if user not registred', async () => {
-//     const res = await request(app)
-//       .put('/api/users/100')
-//     expect(res.status).toEqual(404)
-//     expect(res.body.message).toEqual('User not found!')
-//   })
+describe('User Update', () => {
+  it('Should return 404, if user not registred', async () => {
+    const res = await request(app)
+      .put('/api/users/100')
+    expect(res.status).toEqual(404)
+    expect(res.body.message).toEqual('User not found!')
+  })
 
-//   it('Should return 400 if the password provided is less than 6 characters', async () => {
-//     const user = await factory.create('User')
+  it('Should return 400 if the password provided is less than 6 characters', async () => {
+    const user = await factory.create('User')
 
-//     const res = await request(app)
-//       .put(`/api/users/${user.id}`).send({
-//         password: '12345'
-//       })
-//     expect(res.status).toEqual(400)
-//     expect(res.body).toEqual({ error: 'Invalid param: Password must contain 6 characters or more' })
-//   })
+    const res = await request(app)
+      .put(`/api/users/${user.id}`).send({
+        password: '12345'
+      })
 
-//   it('Should return 400 if no confPassword is provided', async () => {
-//     const user = await factory.create('User')
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Invalid param: Password must contain 6 characters or more' })
+  })
 
-//     const res = await request(app)
-//       .put(`/api/users/${user.id}`).send({
-//         password: '123456'
-//       })
-//     expect(res.status).toEqual(400)
-//     expect(res.body).toEqual({ error: 'Missing param: confPassword' })
-//   })
+  it('Should return 400 if no confPassword is provided', async () => {
+    const user = await factory.create('User')
 
-//   it('Should return 400 if password is diff confPassword', async () => {
-//     const user = await factory.create('User')
+    const res = await request(app)
+      .put(`/api/users/${user.id}`).send({
+        password: '123456'
+      })
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Missing param: confPassword' })
+  })
 
-//     const res = await request(app)
-//       .put(`/api/users/${user.id}`).send({
-//         password: '123456',
-//         confPassword: '123456789'
-//       })
-//     expect(res.status).toEqual(400)
-//     expect(res.body).toEqual({ error: 'Missing param: Passwords do not match' })
-//   })
+  it('Should return 400 if password is diff confPassword', async () => {
+    const user = await factory.create('User')
 
-//   it('Should return 400 if email provided is invalid', async () => {
-//     const user = await factory.create('User')
+    const res = await request(app)
+      .put(`/api/users/${user.id}`).send({
+        password: '123456',
+        confPassword: '123456789'
+      })
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Missing param: Passwords do not match' })
+  })
 
-//     const res = await request(app)
-//       .put(`/api/users/${user.id}`).send({
-//         email: 'invalid_email'
-//       })
-//     expect(res.status).toEqual(400)
-//     expect(res.body).toEqual({ error: 'Invalid param: email' })
-//   })
+  it('Should return 400 if email provided is invalid', async () => {
+    const user = await factory.create('User')
 
-//   it('Should return 200, if the user informed to update exists', async () => {
-//     const user = await factory.create('User')
+    const res = await request(app)
+      .put(`/api/users/${user.id}`).send({
+        email: 'invalid_email'
+      })
+    expect(res.status).toEqual(400)
+    expect(res.body).toEqual({ error: 'Invalid param: email' })
+  })
 
-//     const res = await request(app)
-//       .put(`/api/users/${user.id}`)
-//     expect(res.status).toEqual(200)
-//     expect(res.body.message).toEqual('User edited successfully!')
-//   })
-// })
+  it('Should return 200, if the user informed to update exists', async () => {
+    const user = await factory.create('User')
+
+    const res = await request(app)
+      .put(`/api/users/${user.id}`)
+    expect(res.status).toEqual(200)
+    expect(res.body.message).toEqual('User edited successfully!')
+  })
+})
 
 // describe('User Delete', () => {
 //   it('Should return 404, if user not registred', async () => {
