@@ -3,3 +3,5 @@
 .env.test
 tests/database.sqlite
 coverage
+.idea/
+mysql/
