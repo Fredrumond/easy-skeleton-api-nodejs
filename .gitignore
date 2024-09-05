@@ -5,3 +5,4 @@ tests/database.sqlite
 coverage
 .idea/
 mysql/
+dist/
