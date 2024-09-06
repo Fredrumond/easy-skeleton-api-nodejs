@@ -1,10 +1,16 @@
 import '../utils/module-alias';
-import express, { Request, Response } from "express";
+import dotenv from 'dotenv';
+import express from "express";
+import setupRoutes from '@src/main/routes';
+
+dotenv.config({
+    path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env'
+});
 
 const app = express();
 
-// app.get('/api/users', (req: Request, res: Response) => {
-//     res.send('uers');
-// });
+app.use(express.json())
+setupRoutes(app)
+
 
 export default app;

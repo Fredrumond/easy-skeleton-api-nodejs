@@ -35,7 +35,13 @@
   "scripts": {
     "build": "tsc",
     "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/main/server.ts",
-    "test:integration": "jest --projects ./tests --runInBand"
+    "test": "NODE_ENV=test jest --projects ./tests",
+    "pretest": "NODE_ENV=test sequelize db:migrate",
+    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
+    "test:unit": "jest --watch -c jest-unit-config.js",
+    "test:integration": "npm test -c jest-integration-config.js",
+    "test:ci": "npm test -- --coverage",
+    "test:staged": "npm test -- --findRelatedTests"
   },
   "standard": {
     "env": [
