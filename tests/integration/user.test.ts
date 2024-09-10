@@ -1,6 +1,6 @@
 import supertest from "supertest";
 import app from '@src/main/app';
-import request from "supertest";
+import factory from '../factories';
 
 const user = {
     name: 'teste',
@@ -112,3 +112,22 @@ describe('User Index',() => {
         expect(status).toEqual(200)
     });
 });
+
+describe('User Show', () => {
+    // it('Should return user search', async () => {
+    //     const user = await factory.create('User')
+    //     console.log(user)
+    //
+    //     const {body, status} = await supertest(app)
+    //         .get(`/api/users/${user.id}`)
+    //     expect(status).toEqual(200)
+    //     expect(body.body.id).toEqual(user.id)
+    // })
+
+    it('Should return 404, if user not registred', async () => {
+        const {body, status} = await supertest(app)
+            .get('/api/users/100')
+        expect(status).toEqual(404)
+        expect(body.message).toEqual('User not found!')
+    })
+})
