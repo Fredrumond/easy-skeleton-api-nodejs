@@ -1,5 +1,5 @@
 export class PasswordValidator {
-    isValid (password) {
+    isValid (password:any) {
         if (password.length >= 6) {
             return true
         }
