@@ -1,7 +1,6 @@
 import supertest from "supertest";
 import app from '@src/main/app';
-import factory from '../factories';
-
+import { generateFakeUser } from '../factories';
 const user = {
     name: 'teste',
     email: 'teste@teste.com',
@@ -114,15 +113,13 @@ describe('User Index',() => {
 });
 
 describe('User Show', () => {
-    // it('Should return user search', async () => {
-    //     const user = await factory.create('User')
-    //     console.log(user)
-    //
-    //     const {body, status} = await supertest(app)
-    //         .get(`/api/users/${user.id}`)
-    //     expect(status).toEqual(200)
-    //     expect(body.body.id).toEqual(user.id)
-    // })
+    it('Should return user search', async () => {
+        const fakeUserData = await generateFakeUser();
+        const {body, status} = await supertest(app)
+            .get(`/api/users/${fakeUserData.id}`)
+        expect(status).toEqual(200)
+        expect(body.body.id).toEqual(fakeUserData.id)
+    })
 
     it('Should return 404, if user not registred', async () => {
         const {body, status} = await supertest(app)
