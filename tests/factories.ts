@@ -1,13 +1,16 @@
-import { factory } from 'factory-girl';
-import faker from 'faker'
-import { User } from '../src/app/models';
+import { faker } from '@faker-js/faker';
+import db from '@src/app/models'
 
+const userModel = db.User;
+const generateFakeUser = async () => {
+    const user = await userModel.create({
+        name: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        confPassword: faker.internet.password(),
+    });
 
-factory.define('User', User, {
-    name: faker.name.findName(),
-    email: faker.internet.email(),
-    password: faker.internet.password(),
-    confPassword: faker.internet.password(),
-});
+    return user;
+};
 
-export default factory;
+export { generateFakeUser };
