@@ -192,3 +192,21 @@ describe('User Update', () => {
         expect(body.message).toEqual('User edited successfully!')
     })
 })
+
+describe('User Delete', () => {
+    it('Should return 404, if user not registred', async () => {
+        const {body, status} = await supertest(app)
+            .delete('/api/users/100')
+        expect(status).toEqual(404)
+        expect(body.message).toEqual('User not found!')
+    })
+
+    it('Should return 200, if the user informed to delete exists', async () => {
+        const fakeUserData = await generateFakeUser();
+
+        const {body, status} = await supertest(app)
+            .delete(`/api/users/${fakeUserData.id}`)
+        expect(status).toEqual(200)
+        expect(body.message).toEqual('User deleted successfully!')
+    })
+})
