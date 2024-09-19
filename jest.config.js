@@ -1,16 +1,14 @@
+const { resolve } = require('path');
+const root = resolve(__dirname);
 module.exports = {
-  bail: true,
-  clearMocks: true,
-  collectCoverageFrom: [
-    'src/**',
-    '!src/database/migrations/**',
-    '!src/database/seeders/**',
-    '!src/main/server.js'
-  ],
-  coverageDirectory: 'tests/coverage',
+  rootDir: root,
+  displayName: 'root-tests',
+  testMatch: ['<rootDir>/src/**/*.test.ts','<rootDir>/src/**/*.spec.ts'],
   testEnvironment: 'node',
-  testMatch: [
-    '**/tests/**/*.test.js?(x)',
-    '**/tests/**/*.spec.js?(x)'
-  ]
-}
+  clearMocks: true,
+  preset: 'ts-jest',
+  moduleNameMapper: {
+    '@src/(.*)': '<rootDir>/src/$1',
+    '@test/(.*)': '<rootDir>/tests/$1',
+  },
+};

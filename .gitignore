@@ -2,4 +2,7 @@
 .env
 .env.test
 tests/database.sqlite
-tests/coverage
+coverage
+.idea/
+mysql/
+dist/

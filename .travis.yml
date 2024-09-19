@@ -5,6 +5,8 @@ node_js:
 before_script:
   - cp .env.test.example .env.test
   - yarn install
+  - yarn add codecov -D
 
 script:
   - yarn test:ci
+  - codecov

@@ -1,6 +1,6 @@
-# Easy Skeleton API node.js
-
 [![Build Status](https://travis-ci.org/Fredrumond/easy-skeleton-api-nodejs.svg?branch=master)](https://travis-ci.org/Fredrumond/easy-skeleton-api-nodejs)
+[![codecov](https://codecov.io/gh/Fredrumond/easy-skeleton-api-nodejs/branch/master/graph/badge.svg)](https://codecov.io/gh/Fredrumond/easy-skeleton-api-nodejs)
+# Easy Skeleton API node.js
 
 Este projeto tem a finalidade para o estudo de node e para a criação rápida de pequenos projetos.
 
@@ -9,37 +9,10 @@ Como é um projeto para praticas de estudos, ao ler este documento você pode en
 - [Dependências](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/DEPENDENCIAS.md)
 - [Husky](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/HUSKY.md)
 - [Lint staged](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/LINTSTAGED.md)
+- [Standard](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/STANDARD.md)
 - [Scripts no package.json](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/SCRIPTS.md)
-
-
-  
-
-## Estrutura
-- src
-	- app
-		- controllers
-		- models
-			- index.js
-	- config
-		- database.js
-	- database
-		- migrations
-		- seeders
-	- utils
-	- app.js
-	- routes.js
-	- server.js
-- tests
-- .env.example
-- .envt.test.example
-- .gitignore
-- .huskyrc.json
-- .lintstagedrc.json
-- .sequelizerc
-- jest-integration-config.js
-- jest-unit-config.js
-- jest.config.js
-- package.json
+- [Estrutura](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/ESTRUTURA.md)
+- [Changelog](https://github.com/Fredrumond/estudos/blob/master/easy-skeleton-api/CHANGELOG.md)
 
  ## Instruções de uso
 
@@ -124,45 +97,41 @@ module.exports = (sequelize, DataTypes) => {
 	return  SeuModelo
 }
 ```
-#### Criando controller
+#### Criando a rota
 
-Para criar um controller, vai ate `src/app/controllers` e crie seu controller como o exemplo:
+Para criar uma rota, vai ate `src/presentation/routers` e crie sua rota como o exemplo:
+
+Exemplo: `nome-rota-routers.js` o prefixo `-routers` é obrigatório para o funcionamento dinâmico das rotas.
 
 ``` js
-import  { SeuModelo }  from  '../models';
-class  SeuModeloController {
-	async  store(req,res) {
-		// Insira aqui seu codigo
+const  HttpResponse = require('../helpers/http-response')
+
+module.exports = class  NomeDaSuaRouter {
+	constructor (dependencia) {
+		this.dependencia = dependencia
 	}
-	async  index(req, res) {
-		// Insira aqui seu codigo
-	}
-	async  show(req,res) {
-		// Insira aqui seu codigo
-	}
-	async  update(req,res) {
-		// Insira aqui seu codigo
-	}
-	async  delete(req,res) {
+	async  route (httpRequest) {
 		// Insira aqui seu codigo
 	}
 }
-module.exports = new  SeuModeloController()
 ```
 
-#### Criando rotas
+#### Registrando rota
 
-Para criar uma rota, vai ate `src/routes.js` e crie sua rota como o exemplo:
+Para registrar uma rota, vai ate `src/main/routes/sua-rota.js` e crie sua rota como o exemplo:
 
 ``` js
 
-import  SeuModeloController  from  './app/controllers/SeuModeloController';
+const { adapt } = require('../adapters/express-router-adapter')
+const  SuaRouterComposer = require('../composers/sua-rota-router-composer')
 
-routes.post('/nomerota', SeuModeloController.store);
-routes.get('/nomerota', SeuModeloController.index);
-routes.get('/nomerota/:id', SeuModeloController.show);
-routes.put('/nomerota/:id', SeuModeloController.update);
-routes.delete('/nomerota/:id', SeuModeloController.delete);
+module.exports = router  => {
+	router.post('/nomerota', adapt(SuaRouterComposer.compose()))
+	router.get('/nomerota', adapt(SuaRouterComposer.compose()))
+	router.get('/nomerota/:id', adapt(SuaRouterComposer.compose()))
+	router.put('/nomerota/:id', adapt(SuaRouterComposer.compose()))
+	router.delete('/nomerota/:id', adapt(SuaRouterComposer.compose()))
+}
 
 ```
 
